@@ -2,10 +2,12 @@
 [build-system]
 requires = ["setuptools", "wheel"]
 build-backend = "setuptools.build_meta"
+
+[tool.cibuildwheel]
 before-all = "python -m pip install mypy"
 
-[cibuildwheel.linux]
+[tool.cibuildwheel.linux]
 before-all = "sudo apt install python3-dev && python -m pip install mypy"
 
-[cibuildwheel.macos]
+[tool.cibuildwheel.macos]
 before-all = "xcode-select --install && python -m pip install mypy"
