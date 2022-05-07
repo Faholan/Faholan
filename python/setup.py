@@ -32,7 +32,7 @@ def find_package_data(base: str, globs: t.List[str], root: str) -> t.List[str]:
     return relevant
 
 
-use_mypyc = os.getenv("MYPY_USE_MYPYC", None) == "1"
+use_mypyc = os.getenv("USE_MYPYC", None) == "1"
 
 if len(sys.argv) > 1 and sys.argv[1] == "--use-mypyc":
     sys.argv.pop(1)
