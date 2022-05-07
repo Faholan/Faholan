@@ -24,11 +24,6 @@ jobs:
     steps:
       - uses: actions/checkout@v3
 
-      # If using mypyc, uncomment
-
-      # - name: Install mypyc
-      #   run: pipx install mypy
-
       - name: Build wheels
         uses: pypa/cibuildwheel@v2.5.0
         # If using mypyc

@@ -1,7 +1,11 @@
 # cibuildwheel with mypyc
+[build-system]
+requires = ["setuptools", "wheel"]
+build-backend = "setuptools.build_meta"
+before-all = "python -m pip install mypy"
 
 [cibuildwheel.linux]
-before-all = "sudo apt install python3-dev"
+before-all = "sudo apt install python3-dev && python -m pip install mypy"
 
 [cibuildwheel.macos]
-before-all = "xcode-select --install"
+before-all = "xcode-select --install && python -m pip install mypy"
