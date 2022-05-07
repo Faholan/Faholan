@@ -1,0 +1,70 @@
+name: Build and upload to PyPI
+
+# Build on every branch push, tag push, and pull request change:
+on:
+  release:
+    types:
+      - published
+# Alternatively, to publish when a (published) GitHub Release is created, use the following:
+# on:
+#   push:
+#   pull_request:
+#   release:
+#     types:
+#       - published
+
+jobs:
+  build_wheels:
+    name: Build wheels on ${{ matrix.os }}
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        os: [ubuntu-latest, windows-latest, macos-latest]
+
+    steps:
+      - uses: actions/checkout@v3
+
+      # If using mypyc, uncomment
+
+      # - name: Install mypyc
+      #   run: pipx install mypy
+
+      - name: Build wheels
+        uses: pypa/cibuildwheel@v2.5.0
+        # If using mypyc
+        # env:
+        #   CIBW_ENVIRONMENT: USE_MYPYC=1
+
+      - uses: actions/upload-artifact@v3
+        with:
+          path: ./wheelhouse/*.whl
+
+  build_sdist:
+    name: Build source distribution for Python
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Build sdist
+        run: pipx run build --sdist
+
+      - uses: actions/upload-artifact@v3
+        with:
+          path: dist/*.tar.gz
+
+  upload_pypi:
+    name: Upload wheels and sdist to PyPI
+    needs: [build_wheels, build_sdist]
+    runs-on: ubuntu-latest
+    # upload to PyPI on every tag starting with 'v'
+    steps:
+      - uses: actions/download-artifact@v3
+        with:
+          name: artifact
+          path: dist
+
+      - uses: pypa/gh-action-pypi-publish@release/v1
+        with:
+          user: __token__
+          password: ${{ secrets.pypi_password }}

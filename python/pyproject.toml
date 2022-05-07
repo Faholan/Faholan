@@ -1,0 +1,7 @@
+# cibuildwheel with mypyc
+
+[cibuildwheel.linux]
+before-all = "sudo apt install python3-dev"
+
+[cibuildwheel.macos]
+before-all = "xcode-select --install"
