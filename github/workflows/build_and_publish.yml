@@ -57,7 +57,6 @@ jobs:
     name: Upload wheels and sdist to PyPI
     needs: [build_wheels, build_sdist]
     runs-on: ubuntu-latest
-    # upload to PyPI on every tag starting with 'v'
     steps:
       - uses: actions/download-artifact@v3
         with:
@@ -67,4 +66,4 @@ jobs:
       - uses: pypa/gh-action-pypi-publish@release/v1
         with:
           user: __token__
-          password: ${{ secrets.pypi_password }}
+          password: ${{ secrets.PYPI_TOKEN }}
