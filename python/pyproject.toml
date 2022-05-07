@@ -8,6 +8,3 @@ before-all = "python -m pip install mypy"
 
 [tool.cibuildwheel.linux]
 before-all = "sudo apt install python3-dev && python -m pip install mypy"
-
-[tool.cibuildwheel.macos]
-before-all = "xcode-select --install && python -m pip install mypy"
